@@ -1,0 +1,11 @@
+{
+  "license": "Unlicense",
+  "repository": "none",
+  "description": "-",
+  "dependencies": {
+    "web3": "^0.17.0-alpha"
+  },
+  "script": {
+    "start": "node dist/app.js"
+  }
+}
