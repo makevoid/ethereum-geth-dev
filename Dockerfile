@@ -62,12 +62,6 @@ RUN cat ./config/genesis.json
 # this line will check if your account has the ethers specified into genesis.json>alloc
 # RUN geth --datadir . --dev --exec "eth.getBalance(eth.coinbase)" console
 
-# if you use named volumes (volume create) you will end up with geth.ipc being created here:
-#
-#   /var/lib/docker/volumes/datadir/_data
-#
-# the ./run.sh command will need to change from "$PWD/datadir:/datadir" to "datadir:/datadir" (-v flag)
-
 VOLUME /datadir
 
 EXPOSE 8545
