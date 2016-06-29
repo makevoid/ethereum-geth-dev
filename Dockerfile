@@ -62,8 +62,16 @@ RUN cat ./config/genesis.json
 # this line will check if your account has the ethers specified into genesis.json>alloc
 # RUN geth --datadir . --dev --exec "eth.getBalance(eth.coinbase)" console
 
+# if you use named volumes (volume create) you will end up with geth.ipc being created here:
+#
+#   /var/lib/docker/volumes/datadir/_data
+#
+# the ./run.sh command will need to change from "$PWD/datadir:/datadir" to "datadir:/datadir" (-v flag)
+
+VOLUME /datadir
+
 EXPOSE 8545
 EXPOSE 30303
 # TODO - check: port 30303 needed?
 
-ENTRYPOINT ["/usr/bin/geth",  "--datadir", ".", "--password", "config/password.txt", "--unlock", "0", "--dev", "--rpc", "--rpcaddr", "0.0.0.0", "js", "./dist/geth_mine.js"]
+ENTRYPOINT ["/usr/bin/geth",  "--datadir", ".", "--password", "config/password.txt", "--unlock", "0", "--dev", "--ipcpath", "/datadir/geth.ipc", "--rpc", "--rpcaddr", "0.0.0.0", "js", "./dist/geth_mine.js"]
