@@ -25,6 +25,8 @@ If you want a password different than `foo` please edit `config/password.txt` be
 Please take a look at the Dockerfile, it's quite simple and has few options (logging of some steps, regenerating the address...)
 
 
-Enjoy,
 
 @makevoid
+
+
+p.s. there are many repositories called `ethereum-geth-dev`, this is the latest version, you should check this out first but the others have some cool differences as well, the `ethereum-geth-dev-solc` one for example, that adds just an `apt-get-install solc` (coming from the ethereum) ;)
