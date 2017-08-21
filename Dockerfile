@@ -56,7 +56,9 @@ ADD lib /app
 RUN ./coffeeify
 
 RUN ./prepare_genesis
-RUN geth  --datadir . --dev init config/genesis.json
+# Apparently `account new` will create a DB with an incompatible block
+RUN rm -rf geth/chaindata/*
+RUN geth --datadir . init config/genesis.json
 RUN cat ./config/genesis.json
 
 # this line will check if your account has the ethers specified into genesis.json>alloc
@@ -69,4 +71,4 @@ EXPOSE 8545
 EXPOSE 30303
 # TODO - check: port 30303 needed?
 
-ENTRYPOINT ["/usr/bin/geth",  "--datadir", ".", "--password", "config/password.txt", "--unlock", "0", "--dev", "--rpc", "--rpcaddr", "0.0.0.0", "js", "./dist/geth_mine.js"]
+ENTRYPOINT ["/usr/bin/geth",  "--datadir", ".", "--password", "config/password.txt", "--unlock", "0", "--rpc", "--rpcaddr", "0.0.0.0", "js", "./dist/geth_mine.js"]
