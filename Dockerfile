@@ -20,6 +20,9 @@ ENV NODE_ENV production
 # / nodejs
 # --------------------
 
+# How many accounts to create
+ENV GETH_ACCOUNT_TOTAL 5
+
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && \
@@ -45,7 +48,7 @@ RUN npm i
 ADD config /app/config
 # RUN ls (add/change this line if you want to regenerate a naw address)
 
-RUN geth --datadir . --password config/password.txt account new
+RUN for i in $(seq 1 $GETH_ACCOUNT_TOTAL); do geth --datadir . --password config/password.txt account new; done
 # RUN geth account list (for verification)
 
 ADD coffeeify /app
