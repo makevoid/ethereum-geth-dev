@@ -74,4 +74,4 @@ EXPOSE 8545
 EXPOSE 30303
 # TODO - check: port 30303 needed?
 
-ENTRYPOINT ["/usr/bin/geth",  "--datadir", ".", "--password", "config/password.txt", "--unlock", "0", "--rpc", "--rpcaddr", "0.0.0.0", "js", "./dist/geth_mine.js"]
+ENTRYPOINT ["/usr/bin/geth", "--netrestrict", "127.0.0.1/8", "--datadir", ".", "--password", "config/password.txt", "--unlock", "0,1,2,3,4", "--rpc", "--rpcaddr", "0.0.0.0", "js", "./dist/geth_mine.js"]
