@@ -20,6 +20,9 @@ ENV NODE_ENV production
 # / nodejs
 # --------------------
 
+# How many accounts to create
+ENV GETH_ACCOUNT_TOTAL 10
+
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update && \
@@ -45,7 +48,7 @@ RUN npm i
 ADD config /app/config
 # RUN ls (add/change this line if you want to regenerate a naw address)
 
-RUN geth --datadir . --password config/password.txt account new
+RUN for i in $(seq 1 $GETH_ACCOUNT_TOTAL); do geth --datadir . --password config/password.txt account new; done
 # RUN geth account list (for verification)
 
 ADD coffeeify /app
@@ -56,7 +59,9 @@ ADD lib /app
 RUN ./coffeeify
 
 RUN ./prepare_genesis
-RUN geth  --datadir . --dev init config/genesis.json
+# Apparently `account new` will create a DB with an incompatible block
+RUN rm -rf geth/chaindata/*
+RUN geth --datadir . init config/genesis.json
 RUN cat ./config/genesis.json
 
 # this line will check if your account has the ethers specified into genesis.json>alloc
@@ -69,4 +74,4 @@ EXPOSE 8545
 EXPOSE 30303
 # TODO - check: port 30303 needed?
 
-ENTRYPOINT ["/usr/bin/geth",  "--datadir", ".", "--password", "config/password.txt", "--unlock", "0", "--dev", "--rpc", "--rpcaddr", "0.0.0.0", "js", "./dist/geth_mine.js"]
+ENTRYPOINT ["/usr/bin/geth", "--networkid", "4242", "--verbosity", "4", "--netrestrict", "127.0.0.1/8", "--datadir", ".", "--password", "config/password.txt", "--unlock", "0,1,2,3,4", "--rpc", "--rpcaddr", "0.0.0.0", "js", "./dist/geth_mine.js"]

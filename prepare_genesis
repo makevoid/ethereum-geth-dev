@@ -1,4 +1,23 @@
-coinbase=$(geth  --datadir . --dev --rpc --rpcaddr 0.0.0.0 --exec eth.coinbase console)
+coinbase=$(geth  --datadir . --rpc --rpcaddr 0.0.0.0 --exec eth.accounts[0] console)
+accountTwo=$(geth  --datadir . --rpc --rpcaddr 0.0.0.0 --exec eth.accounts[1] console)
+accountThree=$(geth  --datadir . --rpc --rpcaddr 0.0.0.0 --exec eth.accounts[2] console)
+accountFour=$(geth  --datadir . --rpc --rpcaddr 0.0.0.0 --exec eth.accounts[3] console)
+accountFive=$(geth  --datadir . --rpc --rpcaddr 0.0.0.0 --exec eth.accounts[4] console)
+accountSix=$(geth  --datadir . --rpc --rpcaddr 0.0.0.0 --exec eth.accounts[5] console)
+accountSeven=$(geth  --datadir . --rpc --rpcaddr 0.0.0.0 --exec eth.accounts[6] console)
+accountEight=$(geth  --datadir . --rpc --rpcaddr 0.0.0.0 --exec eth.accounts[7] console)
+accountNine=$(geth  --datadir . --rpc --rpcaddr 0.0.0.0 --exec eth.accounts[8] console)
+accountTen=$(geth  --datadir . --rpc --rpcaddr 0.0.0.0 --exec eth.accounts[9] console)
 echo "Coinbase: $coinbase"
-sed -i s/\"ADDRESS\"/$coinbase/g config/genesis.json
-echo "Coinbase written in genesis.json file."
+echo "Secondary accounts: $accountTwo $accountThree $accountFour $accountFive"
+sed -i s/\"COINBASE\"/$coinbase/g config/genesis.json
+sed -i s/\"ACCOUNT2\"/$accountTwo/g config/genesis.json
+sed -i s/\"ACCOUNT3\"/$accountThree/g config/genesis.json
+sed -i s/\"ACCOUNT4\"/$accountFour/g config/genesis.json
+sed -i s/\"ACCOUNT5\"/$accountFive/g config/genesis.json
+sed -i s/\"ACCOUNT6\"/$accountSix/g config/genesis.json
+sed -i s/\"ACCOUNT7\"/$accountSeven/g config/genesis.json
+sed -i s/\"ACCOUNT8\"/$accountEight/g config/genesis.json
+sed -i s/\"ACCOUNT9\"/$accountNine/g config/genesis.json
+sed -i s/\"ACCOUNT10\"/$accountTen/g config/genesis.json
+echo "Accounts written to genesis.json file."
